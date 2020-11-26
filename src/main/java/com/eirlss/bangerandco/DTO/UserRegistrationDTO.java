@@ -1,17 +1,23 @@
 package com.eirlss.bangerandco.DTO;
 
-public class UserRegistrationDTO
-{
+public class UserRegistrationDTO {
     private String firstName;
     private String lastName;
     private String email;
     private String password;
+    private String role;
 
-    public UserRegistrationDTO(String firstName, String lastName, String email, String password) {
+    public UserRegistrationDTO()
+    {
+
+    }
+
+    public UserRegistrationDTO(String firstName, String lastName, String email, String password, String role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+        this.role = role;
     }
 
     public String getFirstName() {
@@ -44,5 +50,13 @@ public class UserRegistrationDTO
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }
