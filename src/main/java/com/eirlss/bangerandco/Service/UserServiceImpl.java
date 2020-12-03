@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,9 +36,21 @@ public class UserServiceImpl implements UserService {
     {
         User user= new User(registrationDTO.getFirstName(),registrationDTO.getLastName()
                 ,registrationDTO.getEmail(),passwordEncoder.encode(registrationDTO.getPassword()),
-                Arrays.asList(new Role("ROLE_USER")));
+                Arrays.asList(new Role(registrationDTO.getRole())));
 
         return userRepository.save(user);
+    }
+
+    @Override
+    public List<User> getAllUsers(String keyword)
+    {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public void deleteUserById(int id)
+    {
+        this.userRepository.deleteById(id);
     }
 
     @Override
