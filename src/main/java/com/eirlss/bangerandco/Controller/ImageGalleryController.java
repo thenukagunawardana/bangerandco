@@ -46,7 +46,8 @@ public class ImageGalleryController
 	}
 
 	@PostMapping("/image/saveImageDetails")
-	public @ResponseBody ResponseEntity<?> createProduct(@RequestParam("name") String name,
+	public @ResponseBody ResponseEntity<?> createProduct(@RequestParam("name") String name,@RequestParam("manufacturer") String manufacturer,
+														 @RequestParam("transmission") String transmission,
 			@RequestParam("price") double price, @RequestParam("description") String description, Model model, HttpServletRequest request
 			,final @RequestParam("image") MultipartFile file)
 	{
@@ -61,9 +62,13 @@ public class ImageGalleryController
 				return new ResponseEntity<>("Sorry! Filename contains invalid path sequence " + fileName, HttpStatus.BAD_REQUEST);
 			}
 			String[] names = name.split(",");
+			String[] manufacturers=manufacturer.split(",");
+			String [] transmissions=transmission.split(",");
 			String[] descriptions = description.split(",");
 			Date createDate = new Date();
 			log.info("Name: " + names[0]+" "+filePath);
+			log.info("Manufacturer: "+manufacturers[0]);
+			log.info("Transmission: "+transmissions[0]);
 			log.info("description: " + descriptions[0]);
 			log.info("price: " + price);
 			try
@@ -84,6 +89,8 @@ public class ImageGalleryController
 			byte[] imageData = file.getBytes();
 			ImageGallery imageGallery = new ImageGallery();
 			imageGallery.setName(names[0]);
+			imageGallery.setManufacturer(manufacturers[0]);
+			imageGallery.setTransmission(transmissions[0]);
 			imageGallery.setImage(imageData);
 			imageGallery.setPrice(price);
 			imageGallery.setDescription(descriptions[0]);
@@ -91,7 +98,8 @@ public class ImageGalleryController
 			imageGalleryService.saveImage(imageGallery);
 			log.info("HttpStatus===" + new ResponseEntity<>(HttpStatus.OK));
 			return new ResponseEntity<>("Product Saved With File - " + fileName, HttpStatus.OK);
-		} catch (Exception e)
+		}
+		catch (Exception e)
 		{
 			e.printStackTrace();
 			log.info("Exception: " + e);
@@ -114,13 +122,17 @@ public class ImageGalleryController
 	String showProductDetails(@RequestParam("id") Long id, Optional<ImageGallery> imageGallery, Model model) {
 		try {
 			log.info("Id :: " + id);
-			if (id != 0) {
+			if (id != 0)
+			{
 				imageGallery = imageGalleryService.getImageById(id);
 			
 				log.info("products :: " + imageGallery);
-				if (imageGallery.isPresent()) {
+				if (imageGallery.isPresent())
+				{
 					model.addAttribute("id", imageGallery.get().getId());
 					model.addAttribute("description", imageGallery.get().getDescription());
+					model.addAttribute("transmission",imageGallery.get().getTransmission());
+					model.addAttribute("manufacturer",imageGallery.get().getManufacturer());
 					model.addAttribute("name", imageGallery.get().getName());
 					model.addAttribute("price", imageGallery.get().getPrice());
 					return "imagedetails";
@@ -136,10 +148,18 @@ public class ImageGalleryController
 	}
 
 	@GetMapping("/image/show")
-	String show(Model map) {
+	String show(Model map)
+	{
 		List<ImageGallery> images = imageGalleryService.getAllActiveImages();
 		map.addAttribute("images", images);
 		return "images";
+	}
+
+	@GetMapping("/deleteImage/{id}")
+	public String deleteImage(@PathVariable(value = "id") Long id)
+	{
+		this.imageGalleryService.deleteById(id);
+		return "redirect:/image/show";
 	}
 }	
 

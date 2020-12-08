@@ -23,25 +23,15 @@
                     class="icon-bar"></span> <span class="icon-bar"></span> <span
                     class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#" th:href="@{/}">TimeTable</a>
+            <a class="navbar-brand" href="#" th:href="@{/}">Car Rental</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li><a th:href="@{/imageIndex}">Add Vehicles</a></li>
             </ul>
             <ul class="nav navbar-nav">
-                <li><a th:href="@{/classRooms}">todo</a></li>
-            </ul>
-            <ul class="nav navbar-nav">
-                <li><a th:href="@{/batches}">todo</a></li>
-            </ul>
-            <ul class="nav navbar-nav">
-                <li><a th:href="@{/timetable}">todo</a></li>
-            </ul>
-            <ul class="nav navbar-nav">
                 <li><a th:href="@{/user}">Manage Users</a></li>
             </ul>
-
             <ul class="nav navbar-nav">
                 <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
             </ul>

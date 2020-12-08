@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:Manufacturer="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="ISO-8859-1">
-<title>PixelTrice</title>
+<title>BangerAndCo</title>
 <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -31,7 +31,9 @@
 				</div>
 
 				<div class="col-lg-7 single-right-left simpleCart_shelfItem">
-					Name: <span th:text="${name}" class="mb-3"></span>
+					Manufacturer: <span th:text="${manufacturer}" class="mb-3"></span><br><br>
+					Name: <span th:text="${name}" class="mb-3"></span><br><br>
+					Transmission Type: <span th:text="${transmission}" class="mb-3"></span><br><br>
 					<p class="mb-3">
 						Price :&#36; <span class="item_price" th:text="${price}"></span>
 					</p>

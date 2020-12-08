@@ -11,7 +11,8 @@ import java.util.Optional;
 
 
 @Service
-public class ImageGalleryService {
+public class ImageGalleryService
+{
 
 	@Autowired
 	private ImageGalleryRepository imageGalleryRepository;
@@ -20,12 +21,18 @@ public class ImageGalleryService {
 		imageGalleryRepository.save(imageGallery);	
 	}
 
-	public List<ImageGallery> getAllActiveImages() {
+	public List<ImageGallery> getAllActiveImages()
+	{
 		return imageGalleryRepository.findAll();
 	}
 
 	public Optional<ImageGallery> getImageById(Long id) {
 		return imageGalleryRepository.findById(id);
+	}
+
+	public void deleteById(Long id)
+	{
+		imageGalleryRepository.deleteById(id);
 	}
 }
 

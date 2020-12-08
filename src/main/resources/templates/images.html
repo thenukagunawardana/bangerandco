@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>PixelTrice</title>
+  <title>BangerAndCo</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -10,18 +10,20 @@
 </head>
 <body>
 <br>
-<h1 class="text-center">Spring Boot Image Gallery Application
-<a href="/home" class="btn btn-danger text-right">Go Home</a>
+<h1 class="text-center">BangerAndCo Car List
+<a href="/imageIndex" class="btn btn-danger text-right">Go Home</a>
 </h1>
 <br><br>
 
 <table id="example" class="table table-striped table-bordered text-center">
         <thead>
             <tr>
-                <th>SR. No.</th>
+                <th>ID</th>
                 <th>Name</th>
                 <th>Image</th>
                 <th>Description</th>
+                <th>Manufacturer</th>
+                <th>Transmission Type</th>
                 <th>Price</th>
                 <th>Created date</th>
                 <th>Action</th>
@@ -34,9 +36,14 @@
                 <td><img th:src="@{${'/image/display/'+ imageGallery.id}}" 
                 class="card img-fluid" style="width:300px" alt=""/></td>
                 <td th:text="${imageGallery.description}"></td>
-                <td th:text="${imageGallery.price}"></td>
+            <td th:text="${imageGallery.manufacturer}"></td>
+            <td th:text="${imageGallery.transmission}"></td>
+            <td th:text="${imageGallery.price}"></td>
                 <td th:text="${#dates.format({imageGallery.createDate}, 'dd-MM-yyyy')}"/></td>
-               <td><a th:href="@{/image/imageDetails(id=${imageGallery.id})}" class="btn btn-info text-right" target="_blank">View</a></td>
+               <td><a th:href="@{/image/imageDetails(id=${imageGallery.id})}" class="btn btn-info text-right" target="_blank">View</a>
+                   <a th:href="@{/deleteImage/{id}(id=${imageGallery.id})}" class="btn btn-danger">Delete</a></td>
+            <!--delete function -->
+
             </tr>
         </tbody>
     </table>

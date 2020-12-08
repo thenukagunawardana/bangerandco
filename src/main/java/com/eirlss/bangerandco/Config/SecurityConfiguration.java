@@ -46,11 +46,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 "/registration**",
                 "/js/**",
                 "/css/**",
-                "/img/**").permitAll() //img
+                "/img/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login") //change here
+                .loginPage("/login")
                 .permitAll()
                 .and()
                 .logout()

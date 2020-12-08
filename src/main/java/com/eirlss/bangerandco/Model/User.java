@@ -48,7 +48,8 @@ public class User {
 
     }
 
-    public User(String firstName, String lastName, String email, String password, Collection<Role> roles) {
+    public User(String firstName, String lastName, String email, String password, Collection<Role> roles)
+    {
         super();
         this.firstName = firstName;
         this.lastName = lastName;
@@ -56,7 +57,8 @@ public class User {
         this.password = password;
         this.roles = roles;
     }
-    public int getId() {
+    public int getId()
+    {
         return id;
     }
     public void setId(int id) {

@@ -14,6 +14,12 @@ public class ImageGallery {
 	
 	@Column(name = "name", nullable = false)
 	private String name;
+
+	@Column(name = "transmission", nullable = false)
+	private String transmission;
+
+	@Column(name = "manufacturer", nullable = false)
+	private String manufacturer;
 	
 	@Column(name = "description", nullable = false)
 	private String description;	
@@ -79,12 +85,44 @@ public class ImageGallery {
 		this.createDate = createDate;
 	}
 
-	@Override
-	public String toString() {
-		return "Product [id=" + id + ", name=" + name + ", description=" + description + ", price=" + price + ", image="
-				+ Arrays.toString(image) + ", createDate=" + createDate + "]";
+	public String getTransmission() {
+		return transmission;
 	}
-   
+
+	public void setTransmission(String transmission) {
+		this.transmission = transmission;
+	}
+
+	public String getManufacturer() {
+		return manufacturer;
+	}
+
+	public void setManufacturer(String manufacturer) {
+		this.manufacturer = manufacturer;
+	}
+
+//	@Override
+//	public String toString()
+//	{
+//		return "Product [id=" + id + ", name=" + name + ", description=" + description + ", price=" + price + ", image="
+//				+ Arrays.toString(image) + ", createDate=" + createDate + "]";
+//	}
+
+
+	@Override
+	public String toString()
+	{
+		return "ImageGallery{" +
+				"id=" + id +
+				", name='" + name + '\'' +
+				", transmission='" + transmission + '\'' +
+				", manufacturer='" + manufacturer + '\'' +
+				", description='" + description + '\'' +
+				", price=" + price +
+				", image=" + Arrays.toString(image) +
+				", createDate=" + createDate +
+				'}';
+	}
 }
 
 
