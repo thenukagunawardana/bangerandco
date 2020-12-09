@@ -5,8 +5,8 @@ import java.util.Arrays;
 import java.util.Date;
 
 @Entity
-@Table(name = "image_gallery")
-public class ImageGallery {
+@Table(name = "vehicle") //image_gallery
+public class Vehicle {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false, unique = true)
@@ -35,7 +35,10 @@ public class ImageGallery {
     @Column(name = "create_date", nullable = false)
     private Date createDate;
 
-	public ImageGallery() {}
+	public Vehicle()
+	{
+
+	}
 
 	public Long getId() {
 		return id;
@@ -112,7 +115,7 @@ public class ImageGallery {
 	@Override
 	public String toString()
 	{
-		return "ImageGallery{" +
+		return "Vehicle{" +
 				"id=" + id +
 				", name='" + name + '\'' +
 				", transmission='" + transmission + '\'' +

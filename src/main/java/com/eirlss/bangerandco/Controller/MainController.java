@@ -32,7 +32,7 @@ public class MainController
         {
             return "redirect:/lecturerHomePage";
         }
-        return "index";
+        return "vehicleIndex";
     }
 
     @GetMapping("/adminHomePage")

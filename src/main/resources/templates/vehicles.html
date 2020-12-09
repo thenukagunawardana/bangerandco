@@ -11,7 +11,7 @@
 <body>
 <br>
 <h1 class="text-center">BangerAndCo Car List
-<a href="/imageIndex" class="btn btn-danger text-right">Go Home</a>
+<br><a href="/imageIndex" class="btn btn-danger text-right">Go Back</a>
 </h1>
 <br><br>
 
@@ -30,18 +30,18 @@
             </tr>
         </thead>
         <tbody th:with="count=0">
-        <tr th:each = "imageGallery, hh : ${images}">           
+        <tr th:each = "Vehicle, hh : ${images}">
                 <td th:with="count=${count + 1}" th:text="${count}"></td>
-                <td th:text="${imageGallery.name}"></td>
-                <td><img th:src="@{${'/image/display/'+ imageGallery.id}}" 
+                <td th:text="${Vehicle.name}"></td>
+                <td><img th:src="@{${'/image/display/'+ Vehicle.id}}"
                 class="card img-fluid" style="width:300px" alt=""/></td>
-                <td th:text="${imageGallery.description}"></td>
-            <td th:text="${imageGallery.manufacturer}"></td>
-            <td th:text="${imageGallery.transmission}"></td>
-            <td th:text="${imageGallery.price}"></td>
-                <td th:text="${#dates.format({imageGallery.createDate}, 'dd-MM-yyyy')}"/></td>
-               <td><a th:href="@{/image/imageDetails(id=${imageGallery.id})}" class="btn btn-info text-right" target="_blank">View</a>
-                   <a th:href="@{/deleteImage/{id}(id=${imageGallery.id})}" class="btn btn-danger">Delete</a></td>
+                <td th:text="${Vehicle.description}"></td>
+            <td th:text="${Vehicle.manufacturer}"></td>
+            <td th:text="${Vehicle.transmission}"></td>
+            <td th:text="${Vehicle.price}"></td>
+                <td th:text="${#dates.format({Vehicle.createDate}, 'dd-MM-yyyy')}"/></td>
+               <td><a th:href="@{/image/imageDetails(id=${Vehicle.id})}" class="btn btn-info text-right" target="_blank">View</a>
+                   <a th:href="@{/deleteImage/{id}(id=${Vehicle.id})}" class="btn btn-danger">Delete</a></td>
             <!--delete function -->
 
             </tr>

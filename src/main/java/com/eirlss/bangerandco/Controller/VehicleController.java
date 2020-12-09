@@ -1,8 +1,8 @@
 package com.eirlss.bangerandco.Controller;
 
 
-import com.eirlss.bangerandco.Model.ImageGallery;
-import com.eirlss.bangerandco.Service.ImageGalleryService;
+import com.eirlss.bangerandco.Model.Vehicle;
+import com.eirlss.bangerandco.Service.VehicleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,21 +28,21 @@ import java.util.Optional;
 
 
 @Controller
-public class ImageGalleryController
+public class VehicleController
 {
 	
 	@Value("${uploadDir}")
 	private String uploadFolder;
 
 	@Autowired
-	private ImageGalleryService imageGalleryService;
+	private VehicleService vehicleService;
 
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@GetMapping(value = {"/imageIndex"})
 	public String addProductPage()
 	{
-		return "index";
+		return "vehicleIndex";
 	}
 
 	@PostMapping("/image/saveImageDetails")
@@ -87,15 +87,15 @@ public class ImageGalleryController
 				e.printStackTrace();
 			}
 			byte[] imageData = file.getBytes();
-			ImageGallery imageGallery = new ImageGallery();
-			imageGallery.setName(names[0]);
-			imageGallery.setManufacturer(manufacturers[0]);
-			imageGallery.setTransmission(transmissions[0]);
-			imageGallery.setImage(imageData);
-			imageGallery.setPrice(price);
-			imageGallery.setDescription(descriptions[0]);
-			imageGallery.setCreateDate(createDate);
-			imageGalleryService.saveImage(imageGallery);
+			Vehicle vehicle = new Vehicle();
+			vehicle.setName(names[0]);
+			vehicle.setManufacturer(manufacturers[0]);
+			vehicle.setTransmission(transmissions[0]);
+			vehicle.setImage(imageData);
+			vehicle.setPrice(price);
+			vehicle.setDescription(descriptions[0]);
+			vehicle.setCreateDate(createDate);
+			vehicleService.saveImage(vehicle);
 			log.info("HttpStatus===" + new ResponseEntity<>(HttpStatus.OK));
 			return new ResponseEntity<>("Product Saved With File - " + fileName, HttpStatus.OK);
 		}
@@ -109,56 +109,56 @@ public class ImageGalleryController
 	
 	@GetMapping("/image/display/{id}")
 	@ResponseBody
-	void showImage(@PathVariable("id") Long id, HttpServletResponse response, Optional<ImageGallery> imageGallery)
+	void showImage(@PathVariable("id") Long id, HttpServletResponse response, Optional<Vehicle> vehicle)
 			throws ServletException, IOException {
 		log.info("Id :: " + id);
-		imageGallery = imageGalleryService.getImageById(id);
+		vehicle = vehicleService.getImageById(id);
 		response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
-		response.getOutputStream().write(imageGallery.get().getImage());
+		response.getOutputStream().write(vehicle.get().getImage());
 		response.getOutputStream().close();
 	}
 
 	@GetMapping("/image/imageDetails")
-	String showProductDetails(@RequestParam("id") Long id, Optional<ImageGallery> imageGallery, Model model) {
+	String showProductDetails(@RequestParam("id") Long id, Optional<Vehicle> vehicle, Model model) {
 		try {
 			log.info("Id :: " + id);
 			if (id != 0)
 			{
-				imageGallery = imageGalleryService.getImageById(id);
+				vehicle = vehicleService.getImageById(id);
 			
-				log.info("products :: " + imageGallery);
-				if (imageGallery.isPresent())
+				log.info("products :: " + vehicle);
+				if (vehicle.isPresent())
 				{
-					model.addAttribute("id", imageGallery.get().getId());
-					model.addAttribute("description", imageGallery.get().getDescription());
-					model.addAttribute("transmission",imageGallery.get().getTransmission());
-					model.addAttribute("manufacturer",imageGallery.get().getManufacturer());
-					model.addAttribute("name", imageGallery.get().getName());
-					model.addAttribute("price", imageGallery.get().getPrice());
-					return "imagedetails";
+					model.addAttribute("id", vehicle.get().getId());
+					model.addAttribute("description", vehicle.get().getDescription());
+					model.addAttribute("transmission",vehicle.get().getTransmission());
+					model.addAttribute("manufacturer",vehicle.get().getManufacturer());
+					model.addAttribute("name", vehicle.get().getName());
+					model.addAttribute("price", vehicle.get().getPrice());
+					return "vehicleDetails";
 				}
-				return "redirect:/index";
+				return "redirect:/vehicleIndex";
 			}
-		return "redirect:/index";
+		return "redirect:/vehicleIndex";
 		} catch (Exception e)
 		{
 			e.printStackTrace();
-			return "redirect:/index";
+			return "redirect:/vehicleIndex";
 		}	
 	}
 
 	@GetMapping("/image/show")
 	String show(Model map)
 	{
-		List<ImageGallery> images = imageGalleryService.getAllActiveImages();
+		List<Vehicle> images = vehicleService.getAllActiveImages();
 		map.addAttribute("images", images);
-		return "images";
+		return "vehicles";
 	}
 
 	@GetMapping("/deleteImage/{id}")
 	public String deleteImage(@PathVariable(value = "id") Long id)
 	{
-		this.imageGalleryService.deleteById(id);
+		this.vehicleService.deleteById(id);
 		return "redirect:/image/show";
 	}
 }	

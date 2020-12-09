@@ -20,10 +20,14 @@
             $("#image").css("border-color", "red");
             $("#price").css("border-color", "red");
             $("#description").css("border-color", "red");
+            $("#transmission").css("border-color", "red");
+            $("#manufacturer").css("border-color", "red");
             $("#error_name").html("Please fill the required field.");
             $("#error_file").html("Please fill the required field.");
             $("#error_price").html("Please fill the required field.");
             $("#error_description").html("Please fill the required field.");
+            $("#error_transmission").html("Please fill the required field.");
+            $("#error_manufacturer").html("Please fill the required field.");
         } else {
             $("#name").css("border-color", "");
             $("#image").css("border-color", "");
@@ -48,7 +52,7 @@
                         	$("#form")[0].reset();
                         	$('#success').css('display','block');
                             $("#error").text("");
-                            $("#success").html("Product Inserted Successfully.");
+                            $("#success").html("Vehicle Added Successfully.");
                             $('#success').delay(2000).fadeOut('slow');
                          }	   
                         },
