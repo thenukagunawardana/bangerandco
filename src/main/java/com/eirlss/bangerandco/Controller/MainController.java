@@ -24,13 +24,13 @@ public class MainController
         {
             return "redirect:/adminHomePage";
         }
-        if (authentication.getAuthorities().stream().anyMatch(r -> r.getAuthority().equals("User")||r.getAuthority().equals("user")))  //Change to employee
+        if (authentication.getAuthorities().stream().anyMatch(r -> r.getAuthority().equals("Client")||r.getAuthority().equals("client")))
         {
             return "redirect:/userHomePage";
         }
-        if (authentication.getAuthorities().stream().anyMatch(r -> r.getAuthority().equals("Lecturer")||r.getAuthority().equals("lecturer"))) //change to user
+        if (authentication.getAuthorities().stream().anyMatch(r -> r.getAuthority().equals("User")||r.getAuthority().equals("user"))) //employee
         {
-            return "redirect:/lecturerHomePage";
+            return "redirect:/employeeHomePage";
         }
         return "vehicleIndex";
     }
@@ -47,10 +47,10 @@ public class MainController
         return "userHomePage";
     }
 
-//    @GetMapping("/lecturerHomePage")
-//    private String lecturerHomePage()
-//    {
-//        return "lecturerHomePage";
-//    }
+    @GetMapping("/employeeHomePage")
+    private String employeeHomePage()
+    {
+        return "employeeHomePage";
+    }
 
 }

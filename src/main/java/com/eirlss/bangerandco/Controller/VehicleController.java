@@ -22,15 +22,20 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
+import org.supercsv.io.CsvBeanWriter;
+import org.supercsv.io.ICsvBeanWriter;
+import org.supercsv.prefs.CsvPreference;
 
 
 @Controller
 public class VehicleController
 {
-	
 	@Value("${uploadDir}")
 	private String uploadFolder;
 
@@ -46,10 +51,16 @@ public class VehicleController
 	}
 
 	@PostMapping("/image/saveImageDetails")
-	public @ResponseBody ResponseEntity<?> createProduct(@RequestParam("name") String name,@RequestParam("manufacturer") String manufacturer,
+	public @ResponseBody ResponseEntity<?> createProduct(@RequestParam("name") String name,
+														 @RequestParam("manufacturer") String manufacturer,
 														 @RequestParam("transmission") String transmission,
-			@RequestParam("price") double price, @RequestParam("description") String description, Model model, HttpServletRequest request
-			,final @RequestParam("image") MultipartFile file)
+														 @RequestParam("price") double price,
+														 @RequestParam("description") String description,
+
+														 @RequestParam("fuelType")String fuelType,
+
+														 Model model, HttpServletRequest request,
+														 final @RequestParam("image") MultipartFile file)
 	{
 		try {
 			String uploadDirectory = request.getServletContext().getRealPath(uploadFolder);
@@ -65,11 +76,16 @@ public class VehicleController
 			String[] manufacturers=manufacturer.split(",");
 			String [] transmissions=transmission.split(",");
 			String[] descriptions = description.split(",");
+
+			String[] fuelTypes=fuelType.split(",");
+
 			Date createDate = new Date();
+
 			log.info("Name: " + names[0]+" "+filePath);
 			log.info("Manufacturer: "+manufacturers[0]);
 			log.info("Transmission: "+transmissions[0]);
 			log.info("description: " + descriptions[0]);
+			log.info("fuelType: "+fuelTypes[0]);
 			log.info("price: " + price);
 			try
 			{
@@ -94,7 +110,11 @@ public class VehicleController
 			vehicle.setImage(imageData);
 			vehicle.setPrice(price);
 			vehicle.setDescription(descriptions[0]);
+
+			vehicle.setFuelType(fuelTypes[0]);
+
 			vehicle.setCreateDate(createDate);
+
 			vehicleService.saveImage(vehicle);
 			log.info("HttpStatus===" + new ResponseEntity<>(HttpStatus.OK));
 			return new ResponseEntity<>("Product Saved With File - " + fileName, HttpStatus.OK);
@@ -119,7 +139,8 @@ public class VehicleController
 	}
 
 	@GetMapping("/image/imageDetails")
-	String showProductDetails(@RequestParam("id") Long id, Optional<Vehicle> vehicle, Model model) {
+	String showProductDetails(@RequestParam("id") Long id, Optional<Vehicle> vehicle, Model model)
+	{
 		try {
 			log.info("Id :: " + id);
 			if (id != 0)
@@ -134,6 +155,9 @@ public class VehicleController
 					model.addAttribute("transmission",vehicle.get().getTransmission());
 					model.addAttribute("manufacturer",vehicle.get().getManufacturer());
 					model.addAttribute("name", vehicle.get().getName());
+
+					model.addAttribute("fuelType",vehicle.get().getFuelType());
+
 					model.addAttribute("price", vehicle.get().getPrice());
 					return "vehicleDetails";
 				}
@@ -161,5 +185,35 @@ public class VehicleController
 		this.vehicleService.deleteById(id);
 		return "redirect:/image/show";
 	}
+
+	@GetMapping("/vehicles/exportCSV")
+	public void exportCSV(HttpServletResponse response) throws IOException
+	{
+		response.setContentType("text/csv");
+		DateFormat format=new SimpleDateFormat("yyyy-MM-dd_HH:ss");
+		String currentDateTime=format.format((new Date()));
+		String file="Vehicles"+currentDateTime+".csv";
+
+		String headerKey="Content=Disposition";
+		String headerValue="attachment; filename="+file;
+		response.setHeader(headerKey,headerValue);
+		List<Vehicle> list=vehicleService.getAllActiveImages(); //listAll();
+
+		ICsvBeanWriter csvBeanWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
+
+		String[] csvHeader = {"id","name","description","price","image","createDate"};
+
+		String[] nameMapping = {"id","name","description","price","image","createDate"};
+		csvBeanWriter.writeHeader(csvHeader);
+
+		for(Vehicle image:list)
+		{
+			csvBeanWriter.write(image,nameMapping);
+		}
+		csvBeanWriter.close();
+
+
+	}
+
 }	
 

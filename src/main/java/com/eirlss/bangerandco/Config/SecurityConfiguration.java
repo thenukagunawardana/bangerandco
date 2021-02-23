@@ -14,18 +14,21 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter
+{
 
     @Autowired
     private UserService userService;
 
     @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
+    public BCryptPasswordEncoder passwordEncoder()
+    {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
+    public DaoAuthenticationProvider authenticationProvider()
+    {
         DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
         auth.setUserDetailsService(userService);
         auth.setPasswordEncoder(passwordEncoder());
@@ -44,9 +47,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     {
         http.authorizeRequests().antMatchers(
                 "/registration**",
+                "/loadAdminRegistration**",
+                "/loadClientRegistration**",
+                "/webScraping",
+                "/saveClient",
+                "/saveAdmin",
                 "/js/**",
                 "/css/**",
-                "/img/**").permitAll()
+                "/img/**"
+                ,"/images/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

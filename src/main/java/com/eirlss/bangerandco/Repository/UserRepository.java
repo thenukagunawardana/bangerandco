@@ -1,5 +1,6 @@
 package com.eirlss.bangerandco.Repository;
 
+import com.eirlss.bangerandco.Model.Client;
 import com.eirlss.bangerandco.Model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,7 +15,6 @@ public interface UserRepository extends JpaRepository<User, Integer>
     User findByEmail(String email);
 
     @Query("SELECT a FROM User a WHERE a.email=?1")
-    public List<User> findAll(String keyword);
-
+    List<User> findAll(String keyword);
 
 }

@@ -14,6 +14,7 @@ import java.util.Optional;
 public class VehicleService
 {
 
+
 	@Autowired
 	private VehicleRepository vehicleRepository;
 	
@@ -26,6 +27,11 @@ public class VehicleService
 		return vehicleRepository.findAll();
 	}
 
+//	public List<Vehicle> listAll()
+//	{
+//		return vehicleRepository.findAll();
+//	}
+
 	public Optional<Vehicle> getImageById(Long id) {
 		return vehicleRepository.findById(id);
 	}
@@ -33,6 +39,12 @@ public class VehicleService
 	public void deleteById(Long id)
 	{
 		vehicleRepository.deleteById(id);
+	}
+
+	public Vehicle getVehicleByID(long vehicleID)
+	{
+
+		return vehicleRepository.getByID(vehicleID);
 	}
 }
 

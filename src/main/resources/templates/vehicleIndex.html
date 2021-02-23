@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <title>BangerAndCo</title>
     <meta charset="utf-8">
@@ -9,14 +10,14 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
+
 <body>
 <br><br>
-<h1 class="text-center">BangerAndCo Vehicle Gallery</h1><br><br>
+<h1 class="text-center">BangerAndCo Vehicle Fleet</h1><br><br>
 <div class="contact py-sm-5 py-4">
     <div class="container py-xl-4 py-lg-2">
         <!-- form -->
         <form id="form" th:action="@{/image/saveImageDetails}" method="POST">
-<!--            had to add the form action to work here-->
             <div class="contact-grids1 w3agile-6">
                 <div class="row">
                     <div class="col-md-6 col-sm-6 contact-form1 form-group">
@@ -51,12 +52,21 @@
                         <input type="text" class="form-control" placeholder="Transmission Type" id="transmission" name="transmission" required="required">
                         <p id="error_transmission"></p>
                     </div>
+
+                    <div class="col-md-6 col-sm-6 contact-form1 form-group">
+                        <label class="col-form-label">Fuel Type</label>
+                        <input type="text" class="form-control" placeholder="Fuel Type" id="fuelType" name="fuelType" required="required">
+                        <p id="error_FuelType"></p>
+
+                    </div>
                 </div>
                 <div class="right-w3l col-md-6">
                     <input type="button" id="submit" class="btn btn-primary form-control" value="Submit">
                     <br><br>
                 </div>
-                <a href="/image/show" style="float:left;" class="btn btn-success text-right">Show Added Vehicles</a>
+                <a href="/image/show" style="float:left;" class="btn btn-success text-right">Show Fleet</a>
+                <a href="/adminHomePage" style="float:right;" class="btn btn-success text-right">Go back</a>
+
             </div>
             <br>
             <div id="success" class="text-center" style="color:green;"></div>

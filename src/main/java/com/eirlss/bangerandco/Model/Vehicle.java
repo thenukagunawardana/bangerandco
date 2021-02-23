@@ -1,12 +1,21 @@
 package com.eirlss.bangerandco.Model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "vehicle") //image_gallery
-public class Vehicle {
+public class Vehicle
+{
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false, unique = true)
@@ -26,7 +35,7 @@ public class Vehicle {
 	
 	@Column(name = "price",nullable = false, precision = 10, scale = 2)
     private double price;
-	
+
 	@Lob
     @Column(name = "Image", length = Integer.MAX_VALUE, nullable = true)
     private byte[] image;
@@ -35,97 +44,13 @@ public class Vehicle {
     @Column(name = "create_date", nullable = false)
     private Date createDate;
 
-	public Vehicle()
-	{
+    @Column(name = "fueltype",nullable = false)
+    private String fuelType;
 
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-		public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public double getPrice() {
-		return price;
-	}
-
-	public void setPrice(double price) {
-		this.price = price;
-	}
-
-	public byte[] getImage() {
-		return image;
-	}
-
-	public void setImage(byte[] image) {
-		this.image = image;
-	}
-
-	public Date getCreateDate() {
-		return createDate;
-	}
-
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
-
-	public String getTransmission() {
-		return transmission;
-	}
-
-	public void setTransmission(String transmission) {
-		this.transmission = transmission;
-	}
-
-	public String getManufacturer() {
-		return manufacturer;
-	}
-
-	public void setManufacturer(String manufacturer) {
-		this.manufacturer = manufacturer;
-	}
-
-//	@Override
-//	public String toString()
-//	{
-//		return "Product [id=" + id + ", name=" + name + ", description=" + description + ", price=" + price + ", image="
-//				+ Arrays.toString(image) + ", createDate=" + createDate + "]";
-//	}
+	@OneToMany(fetch = FetchType.LAZY, targetEntity = Booking.class)
+	private List<Booking> bookingList;
 
 
-	@Override
-	public String toString()
-	{
-		return "Vehicle{" +
-				"id=" + id +
-				", name='" + name + '\'' +
-				", transmission='" + transmission + '\'' +
-				", manufacturer='" + manufacturer + '\'' +
-				", description='" + description + '\'' +
-				", price=" + price +
-				", image=" + Arrays.toString(image) +
-				", createDate=" + createDate +
-				'}';
-	}
 }
 
 

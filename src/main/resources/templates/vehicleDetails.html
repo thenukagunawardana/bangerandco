@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:Manufacturer="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:Manufacturer="http://www.w3.org/1999/xhtml"
+	  xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="ISO-8859-1">
 <title>BangerAndCo</title>
@@ -14,7 +15,7 @@
 		<div class="container py-xl-4 py-lg-2">
 			<!-- tittle heading -->
 			<h3 class="tittle-w3l text-center mb-lg-5 mb-sm-4 mb-3">
-				<span>I</span>mage
+				<span>V</span>ehicle
 				<span>D</span>etails</h3><br>
 			<!-- //tittle heading -->
 			<div class="row">
@@ -30,19 +31,33 @@
 					</div>
 				</div>
 
+<!--				<div class="col-lg-7 single-right-left simpleCart_shelfItem">-->
+<!--					Manufacturer: <span th:text="${manufacturer}" class="mb-3"></span><br><br>-->
+<!--					Name: <span th:text="${name}" class="mb-3"></span><br><br>-->
+<!--					Transmission Type: <span th:text="${transmission}" class="mb-3"></span><br><br>-->
+<!--					<p class="mb-3">-->
+<!--						Price :&#36; <span class="item_price" th:text="${price}"></span>-->
+<!--					</p>-->
+<!--					<div class="product-single-w3l">-->
+<!--						Description: <span th:text="${description}" class="my-sm-4 my-3"> -->
+<!--						</span>-->
+<!--					</div><br>-->
+
 				<div class="col-lg-7 single-right-left simpleCart_shelfItem">
 					Manufacturer: <span th:text="${manufacturer}" class="mb-3"></span><br><br>
 					Name: <span th:text="${name}" class="mb-3"></span><br><br>
 					Transmission Type: <span th:text="${transmission}" class="mb-3"></span><br><br>
+					Description: <span th:text="${description}" class="mb-3"></span><br><br>
 					<p class="mb-3">
-						Price :&#36; <span class="item_price" th:text="${price}"></span>
+						Price: Rs.	 <span class="item_price" th:text="${price}"></span>
 					</p>
-					<div class="product-single-w3l">
-						Description: <span th:text="${description}" class="my-sm-4 my-3"> 
-						</span>
-					</div><br>
-					<a href="/image/show">Go Back</a>
-					&emsp;<a href="/">Go Home</a>
+
+					<br>
+					<td><a type="button" class="btn btn-info btn-rounded"
+						   th:href="@{/booking/createBooking/{id}(id=${id})}">Book</a></td>
+					<br>
+					<a href="/image/show" style="float: right;">Go Back</a>
+
 				</div>
 			</div>
 		</div>

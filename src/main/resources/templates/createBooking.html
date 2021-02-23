@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Vehicle Booking</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+</head>
+<body>
+<br>
+<br>
+<!-- Create HTML booking form -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+
+            <!-- success message -->
+            <div th:if="${param.success}">
+                <div class="alert alert-info">You Have Successfully Booked the vehicle</div>
+            </div>
+
+            <h1>Booking Form</h1>
+
+            <form th:action="@{/saveAdmin}" method="post" th:object="${admin}">
+
+                <div class="form-group">
+                    <label class="control-label" for="firstName"> Client First Name </label>
+                    <input id="firstName" class="form-control" th:field="*{firstName}"
+                           required autofocus="autofocus" />
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="lastName"> Client Last Name </label> <input
+                        id="lastName" class="form-control" th:field="*{lastName}"
+                        required autofocus="autofocus" />
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="manufacturer"> Manufacturer </label> <input
+                        id="manufacturer" class="form-control" th:field="*{vehicle.manufacturer}" required
+                        autofocus="autofocus" />
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="model"> Model </label> <input
+                        id="model" class="form-control"
+                        th:field="*{vehicle.model}" required autofocus="autofocus" />
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="bookDate"> Booking Date </label> <input
+                        id="bookDate" class="form-control"
+                        th:field="*{bookDate}" required autofocus="autofocus" />
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="endBookDate"> End Book Date </label> <input
+                        id="endBookDate" class="form-control"
+                        th:field="*{endBookDate}" required autofocus="autofocus" />
+                </div>
+
+                <div class="form-group">
+                    <label for="bookTime">Book Time</label>
+
+                    <input th:field="*{bookTime}" class="form-control w-100" type="time"
+                           name="bookTime" id="bookTime" step="60" min="08:00"
+                           max="17:00" value="" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="endBookTime">End Booking Time</label>
+
+                    <input th:field="*{endBookTime}" class="form-control w-100" type="time"
+                           name="endBookTime" id="endBookTime" step="60" min="08:00"
+                           max="17:00" value="" required>
+                </div>
+
+
+
+                <div class="form-group">
+                    <label> Equipment Selection</label>
+                </div>
+                <div th:object="${equipmentList}"></div>
+                <table class="table" border="1">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th> Selection</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="equipment:${equipmentList}">
+                        <td th:inline="text"> [[${equipment.equipmentName}]]</td>
+                        <td th:inline="text"> [[${equipment.equipmentDescription}]]</td>
+                        <td th:inline="text"> [[${equipment.price}]]</td>
+                        <td>
+                            <input type="checkbox" th:value="${equipment.id}" name="equipmentID"
+                                   th:id="${equipment.id}">
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Book Vehicle</button>
+                </div>
+        </div>
+    </div>
+    </div>
+</body>
+</html>
